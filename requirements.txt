@@ -1,0 +1,7 @@
+# FinLedger uses the Python standard library only (json, csv, datetime,
+# decimal, argparse, pathlib, unittest) - there is nothing to install.
+#
+# Requires Python 3.9 or newer.
+#
+# Planned optional extras (see the roadmap in README.md):
+# matplotlib>=3.8   # monthly charts

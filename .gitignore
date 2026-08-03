@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Tooling
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# FinLedger exports
+*.csv
+
+# Keep your real finances out of git.
+# data/transactions.json is committed with sample data so the app is easy to try.
+# If you start using it for real, uncomment the line below and keep a copy
+# of the sample as data/transactions.sample.json:
+# data/transactions.json
