@@ -1,65 +1,144 @@
-# FinLedger — Personal Expense Tracker (CLI + JSON)
+# 💰 FinLedger — Personal Expense Tracker
 
-A small terminal app for tracking income and expenses. Every transaction has a
-category and a date, everything is stored in one human-readable JSON file, and
-the app can show you monthly summaries, a category breakdown, your balance and
-how close you are to your monthly budgets.
+> A lightweight command-line personal finance tracker built with **plain Python 3.9+** and the standard library.
 
-Written in **plain Python 3.9+** — no third-party libraries, no database, no setup.
+Track your **income and expenses**, manage **monthly budgets**, analyze spending by category, search and filter transactions, and export your financial data to **CSV** — all stored in a single human-readable JSON file.
 
----
-
-## Features
-
-- **Full CRUD** — add, list, edit and delete transactions
-- **Categories** — food, transport, medical, housing, … or any custom one you type
-- **Monthly summary** — income / expense / balance per month
-- **Category breakdown** — totals, percentage share and a simple ASCII bar chart
-- **Balance** — total income minus total expenses, at any time
-- **Search & filter** — by type, category, month, date range or free text
-- **Budget limits + alerts** — set a monthly limit per category and get warned at 80% and over 100%
-- **CSV export** — export everything or just one month, ready for Excel / Google Sheets
-- **Safe by design** — input validation everywhere, `Decimal`-based money math, atomic JSON writes
+No database. No third-party dependencies. No complicated setup.
 
 ---
 
-## Project structure
+## ✨ Features
+
+| Feature                    | Description                                                     |
+| -------------------------- | --------------------------------------------------------------- |
+| 📝 **Full CRUD**           | Add, list, edit and delete transactions                         |
+| 🏷️ **Categories**         | Food, transport, medical, housing, or any custom category       |
+| 📊 **Monthly Summary**     | View income, expenses and balance for each month                |
+| 📈 **Category Breakdown**  | See totals, percentage shares and ASCII bar charts              |
+| 💰 **Balance**             | Calculate total income minus total expenses                     |
+| 🔎 **Search & Filter**     | Filter by type, category, month, date range or free text        |
+| 🎯 **Budget Limits**       | Set monthly category budgets and receive alerts                 |
+| 🚨 **Budget Alerts**       | Warnings at 80% usage and when exceeding 100%                   |
+| 📤 **CSV Export**          | Export all transactions or a specific month                     |
+| 🛡️ **Safe Data Handling** | Validation, `Decimal` money calculations and atomic JSON writes |
+| 🧪 **Unit Tested**         | 49 tests covering core functionality                            |
+
+---
+
+## 🛠️ Tech Stack
+
+* 🐍 **Python 3.9+**
+* 📦 **Python Standard Library only**
+* 🗂️ **JSON** — data persistence
+* 📄 **CSV** — data export
+* 🧪 **unittest** — testing
+* 💵 **Decimal** — accurate money calculations
+* 📅 **datetime** — date handling
+
+> **No third-party libraries required.**
+
+---
+
+## 📁 Project Structure
 
 ```text
 finledger/
-├── src/
-│   ├── main.py         # CLI menu, user input handling
-│   ├── storage.py      # validation, JSON load/save, CRUD
-│   └── reports.py      # summaries, breakdowns, budgets, CSV export
-├── data/
-│   └── transactions.json   # the ledger (sample data included)
-├── tests/
-│   ├── test_storage.py
-│   └── test_reports.py
-├── README.md
-├── requirements.txt
-└── .gitignore
+│
+├── 📂 src/
+│   ├── main.py          # CLI menu and user input handling
+│   ├── storage.py       # Validation, JSON persistence and CRUD
+│   └── reports.py       # Summaries, breakdowns, budgets and CSV export
+│
+├── 📂 data/
+│   └── transactions.json    # Ledger with sample data
+│
+├── 📂 tests/
+│   ├── test_storage.py      # Storage and CRUD tests
+│   └── test_reports.py      # Reports and analytics tests
+│
+├── 📄 README.md
+├── 📄 requirements.txt
+└── 📄 .gitignore
 ```
 
-The three modules are deliberately separated: `storage.py` never prints,
-`reports.py` never touches user input, and `main.py` only handles the menu.
-That is what makes the first two easy to unit test.
+### 🧩 Architecture
+
+The application is intentionally split into three responsibilities:
+
+```text
+                 ┌─────────────────┐
+                 │    main.py      │
+                 │   CLI / Menu    │
+                 └────────┬────────┘
+                          │
+                User Interaction
+                          │
+                          ▼
+                 ┌─────────────────┐
+                 │   storage.py    │
+                 │ CRUD / JSON /    │
+                 │   Validation    │
+                 └────────┬────────┘
+                          │
+                          ▼
+                 ┌─────────────────┐
+                 │   reports.py    │
+                 │ Analytics /     │
+                 │ Budgets / CSV   │
+                 └─────────────────┘
+```
+
+* `storage.py` never handles user interaction or printing.
+* `reports.py` focuses only on business logic and reporting.
+* `main.py` is responsible for the CLI and menu flow.
+
+This separation keeps the core logic **clean, reusable and easy to unit test**.
 
 ---
 
-## Installation & usage
+## 🚀 Installation & Usage
+
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/<your-username>/finledger.git
 cd finledger
-
-python src/main.py                    # uses data/transactions.json
-python src/main.py --data my.json     # or any other ledger file
 ```
 
-No `pip install` needed — the standard library is enough.
+### 2. Run the application
 
-Inside the app you get a numbered menu:
+```bash
+python src/main.py
+```
+
+By default, FinLedger uses:
+
+```text
+data/transactions.json
+```
+
+You can also provide a custom data file:
+
+```bash
+python src/main.py --data my.json
+```
+
+### 3. No installation required
+
+FinLedger uses only the Python standard library.
+
+```text
+pip install ...
+```
+
+No need. 🎉
+
+---
+
+## 🖥️ Main Menu
+
+When you start the application, you'll see:
 
 ```text
 =====================================
@@ -78,21 +157,25 @@ Inside the app you get a numbered menu:
  0) Exit
 ```
 
-Handy input shortcuts:
+---
 
-| Input | Meaning |
-| --- | --- |
-| `c` | cancel the current action and go back to the menu |
-| *Enter* | accept the value shown in `[brackets]` |
-| `today` or empty date | today's date |
-| `i` / `e` | income / expense |
-| `12,5` | same as `12.5` |
+## ⌨️ Input Shortcuts
+
+| Input      | Meaning                                          |
+| ---------- | ------------------------------------------------ |
+| `c`        | Cancel the current action and return to the menu |
+| `Enter`    | Accept the default value shown in `[brackets]`   |
+| `today`    | Use today's date                                 |
+| Empty date | Also uses today's date                           |
+| `i`        | Income                                           |
+| `e`        | Expense                                          |
+| `12,5`     | Same as `12.5`                                   |
 
 ---
 
-## Screenshots
+## 📊 Example Output
 
-**Monthly summary**
+### Monthly Summary
 
 ```text
 --- Monthly summary ---
@@ -102,10 +185,11 @@ MONTH    INCOME    EXPENSE  BALANCE  COUNT
 2026-08  150.00    28.25    121.75   3
 ```
 
-**Category breakdown** (one `#` per 5%)
+### Category Breakdown
 
 ```text
 --- expense by category - all time ---
+
 CATEGORY       TOTAL   SHARE  COUNT
 -------------  ------  -----  -----  ---------------
 housing        480.00  76.1%  1      ###############
@@ -115,32 +199,35 @@ transport      25.00   4.0%   1      #
 entertainment  9.50    1.5%   1
 ```
 
-**Transaction list**
+> Each `#` represents approximately **5%** of total expenses.
+
+### Transaction List
 
 ```text
 ID  DATE        TYPE     CATEGORY       AMOUNT    NOTE
 --  ----------  -------  -------------  --------  ------------------
 1   2026-07-01  income   salary         1,200.00  July salary
 2   2026-07-01  expense  housing        480.00    rent
-3   2026-07-06  expense  food           62.40     groceries
 7   2026-08-02  expense  food           18.75     lunch with friends
 8   2026-08-02  expense  entertainment  9.50      cinema ticket
 
 8 transaction(s) | income 1,350.00 AMD | expense 630.55 AMD | balance 719.45 AMD
 ```
 
-**Budget alert after adding an expense**
+### Budget Alert
 
 ```text
 Saved #10: expense 300.00 AMD (food) on 2026-08-03
-! Over budget for 'food' in 2026-08: 364.25 AMD of 300.00 AMD (121%)
+
+! Over budget for 'food' in 2026-08:
+  364.25 AMD of 300.00 AMD (121%)
 ```
 
 ---
 
-## Data format
+## 🗃️ Data Format
 
-Everything lives in a single JSON object:
+FinLedger stores everything in a single JSON object:
 
 ```json
 {
@@ -164,57 +251,146 @@ Everything lives in a single JSON object:
 }
 ```
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| `id` | int | unique, never reused after a delete |
-| `type` | str | `"income"` or `"expense"` |
-| `amount` | float | always **positive**, rounded to 2 decimals; the sign comes from `type` |
-| `category` | str | lowercase, free text |
-| `date` | str | ISO `YYYY-MM-DD` — sortable and comparable as a plain string |
-| `note` | str | optional, may be empty |
-| `created_at` | str | ISO timestamp of when the record was created |
+### Transaction Fields
 
-Notes on robustness:
+| Field        | Type    | Description                            |
+| ------------ | ------- | -------------------------------------- |
+| `id`         | `int`   | Unique ID, never reused after deletion |
+| `type`       | `str`   | Either `"income"` or `"expense"`       |
+| `amount`     | `float` | Positive amount rounded to 2 decimals  |
+| `category`   | `str`   | Lowercase, free-text category          |
+| `date`       | `str`   | ISO format: `YYYY-MM-DD`               |
+| `note`       | `str`   | Optional transaction description       |
+| `created_at` | `str`   | ISO timestamp of record creation       |
 
-- Missing keys (`budgets`, `next_id`, `note`) are filled in on load, so older or
-  hand-edited files still open.
-- `next_id` is recovered from the highest existing id if it is missing or too low.
-- A broken file gives a clear error instead of a stack trace, and the app refuses
-  to start rather than overwrite it.
-- Saving is **atomic**: the data is written to a temp file and then swapped into
-  place, so a crash mid-save cannot leave you with half a ledger.
+> The transaction amount is always positive. The transaction `type` determines whether it is treated as income or expense.
 
 ---
 
-## Tests
+## 🛡️ Data Safety & Robustness
 
-49 unit tests, standard library only:
+FinLedger is designed to handle common data problems safely.
+
+### Automatic Data Recovery
+
+* Missing `budgets`, `next_id` or `note` fields are filled automatically.
+* `next_id` is recovered from the highest existing transaction ID if necessary.
+* Older or manually edited JSON files can still be loaded when valid.
+
+### Corrupted Data Protection
+
+A broken JSON file produces a clear error message instead of an uncontrolled stack trace.
+
+The application refuses to start rather than accidentally overwriting corrupted data.
+
+### Atomic Writes
+
+Data is saved using an **atomic write process**:
+
+```text
+Application
+    │
+    ▼
+Write to temporary file
+    │
+    ▼
+Save completed successfully
+    │
+    ▼
+Replace original JSON file
+```
+
+This prevents the ledger from being left partially written if the application crashes during saving.
+
+---
+
+## 🧪 Testing
+
+FinLedger includes **49 unit tests** using Python's built-in `unittest` framework.
+
+Run the complete test suite with:
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-They cover input validation, CRUD, filters, JSON round-trips (including Unicode
-notes and corrupt files), monthly summaries, category shares, budget alerts and
-CSV export.
+The tests cover:
+
+* ✅ Input validation
+* ✅ CRUD operations
+* ✅ Transaction filtering
+* ✅ JSON round-trips
+* ✅ Unicode transaction notes
+* ✅ Corrupted JSON files
+* ✅ Monthly summaries
+* ✅ Category breakdowns
+* ✅ Percentage calculations
+* ✅ Budget alerts
+* ✅ CSV export
 
 ---
 
-## Roadmap
+## 🗺️ Roadmap
 
-- [ ] Monthly charts with `matplotlib`
-- [ ] SQLite backend as an alternative to JSON
-- [ ] Recurring transactions (rent, salary)
-- [ ] Multi-currency support
-- [ ] Import from bank CSV
+Future improvements planned for FinLedger:
+
+* [ ] 📊 Monthly charts with `matplotlib`
+* [ ] 🗄️ SQLite backend as an alternative to JSON
+* [ ] 🔄 Recurring transactions (rent, salary, subscriptions)
+* [ ] 🌍 Multi-currency support
+* [ ] 🏦 Import transactions from bank CSV files
 
 ---
 
-## What I learned building this
+## 📚 What I Learned
 
-- Designing CRUD around a single source of truth and keeping IDs stable
-- Persisting nested dicts/lists to JSON without losing or corrupting data
-- Working with money safely (`Decimal`, half-up rounding, no float drift)
-- Working with dates: ISO strings sort correctly and group into months for free
-- Separating I/O, business logic and presentation so the logic stays testable
-- Error handling with custom exception classes instead of scattered `print`s
+Building FinLedger helped me practice and understand:
+
+* Designing CRUD operations around a single source of truth
+* Keeping transaction IDs stable and unique
+* Persisting nested dictionaries and lists using JSON
+* Working safely with money using `Decimal`
+* Avoiding floating-point precision issues
+* Using `datetime` and ISO date formats
+* Filtering and grouping data by date and category
+* Separating I/O, business logic and presentation
+* Writing unit tests for application logic
+* Handling corrupted files with custom exceptions
+* Implementing atomic file writes
+* Exporting structured data to CSV
+
+---
+
+## 🎯 Project Goals
+
+FinLedger was built as a practical Python project to strengthen:
+
+```text
+Python Fundamentals
+       │
+       ├── File Handling
+       ├── JSON
+       ├── CSV
+       ├── OOP / Modular Design
+       ├── Error Handling
+       ├── Date & Time
+       ├── Decimal
+       ├── Unit Testing
+       └── CLI Applications
+```
+
+---
+
+## 📌 Project Status
+
+🟢 **Completed — Version 1.0**
+
+The current version provides a fully functional CLI expense tracker with JSON persistence, reporting, budgets, filtering, CSV export and automated tests.
+
+---
+
+## 👨‍💻 Author
+
+**Hrach Sakanhan**
+
+Built with ❤️ and Python 🐍
