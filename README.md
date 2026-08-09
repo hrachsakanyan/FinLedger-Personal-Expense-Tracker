@@ -393,4 +393,4 @@ The current version provides a fully functional CLI expense tracker with JSON pe
 
 **Hrach Sakanhan**
 
-Built with ❤️ and Python 🐍
+Built with Python 🐍
