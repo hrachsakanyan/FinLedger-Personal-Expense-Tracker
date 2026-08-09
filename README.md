@@ -1,4 +1,4 @@
-# 💰 FinLedger — Personal Expense Tracker 
+# 💰 FinLedger — Personal Expense Tracker  
 
 > A lightweight command-line personal finance tracker built with **plain Python 3.9+** and the standard library.
 
