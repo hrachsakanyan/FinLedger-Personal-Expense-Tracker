@@ -4,7 +4,7 @@
 
 Track your **income and expenses**, manage **monthly budgets**, analyze spending by category, search and filter transactions, and export your financial data to **CSV** — all stored in a single human-readable JSON file.
 
-No database. No third-party dependencies. No complicated setup.
+No database. No third-party dependencies. No complicated setup. 
 
 ---
 
