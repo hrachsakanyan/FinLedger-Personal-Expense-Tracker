@@ -185,7 +185,7 @@ MONTH    INCOME    EXPENSE  BALANCE  COUNT
 2026-08  150.00    28.25    121.75   3
 ```
 
-### Category Breakdown
+### Category Breakdown 
 
 ```text
 --- expense by category - all time ---
