@@ -8,7 +8,7 @@ No database. No third-party dependencies. No complicated setup.
 
 ---
 
-## ✨ Features
+## ✨ Features 
 
 | Feature                    | Description                                                     |
 | -------------------------- | --------------------------------------------------------------- |
