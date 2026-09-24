@@ -381,7 +381,7 @@ Python Fundamentals
 
 ---
 
-## 📌 Project Status
+## 📌 Project Status 
 
 🟢 **Completed — Version 1.0**
 
